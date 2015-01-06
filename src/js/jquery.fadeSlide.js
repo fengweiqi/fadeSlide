@@ -134,9 +134,9 @@ date:2015-01-06
 				if(typeof(opts) == 'undefined') {
 
 					var defaults = {
-							pauseTime:1000,//自动播放停留时间 
+							pauseTime:5000,//自动播放停留时间 
 						    slideTime:600,	//动画滑行速度，越大越慢
-						    autoPlay:false,	//true为自动播放，
+						    autoPlay:true,	//true为自动播放，
 						    hoverPause:true, //是否鼠标悬停,默认为false
 						    index:0, //展示项目的索引
 						    autoReSize:true //是否自适应
@@ -184,7 +184,10 @@ date:2015-01-06
 					return privateclass.next();
 				});
 
-				
+				// 自动播放
+				Interval=setInterval(function(){
+					return privateclass.autoPlay();
+				},opts.pauseTime);
 
 				// 鼠标悬停
 
