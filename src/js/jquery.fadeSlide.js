@@ -22,6 +22,19 @@ date:2015-01-06
 			var opts=this.opts;
 			var nowIndex;
 			var runIndex;
+			function fade(that){
+		    		opts.slideAble=false;
+			    	that.el.trigger('swipeLeft',opts.index);
+			    	opts.slideItem.css({'z-index':0,'opacity':0});
+			    	
+			    	opts.slideItem.eq(nowIndex).css({'z-index':1,'opacity':1});//当前item的z-index永远为1
+		    		opts.slideItem.eq(runIndex).css('z-index',2);//淡入item的z-index设为2
+		    		opts.slideItem.eq(runIndex).animate({
+		    			opacity: 1},
+		    			opts.slideTime, function() {
+		    			opts.slideAble=true;
+		    		});
+		    	}
 			if(opts.slideAble){
 				// 淡入淡出，淡入item的z-index设为2，当前item的z-index永远为1，其他的为0
 
@@ -46,19 +59,7 @@ date:2015-01-06
 			    	
 			    	
 		    	}
-		    	function fade(that){
-		    		opts.slideAble=false;
-			    	that.el.trigger('swipeLeft',opts.index);
-			    	opts.slideItem.css({'z-index':0,'opacity':0});
-			    	
-			    	opts.slideItem.eq(nowIndex).css({'z-index':1,'opacity':1});//当前item的z-index永远为1
-		    		opts.slideItem.eq(runIndex).css('z-index',2);//淡入item的z-index设为2
-		    		opts.slideItem.eq(runIndex).animate({
-		    			opacity: 1},
-		    			opts.slideTime, function() {
-		    			opts.slideAble=true;
-		    		});
-		    	}
+		    	
 		    	// 同步导航
 		    	this.setNavigator();
 		    	this.el.trigger('swipe',opts.index);
@@ -69,8 +70,7 @@ date:2015-01-06
 		},
 		setNavigator:function(){//设置导航
 				var opts=this.opts;
-				var navigatorWidth=opts.navigator.width();
-				opts.navigator.css('margin-left',-navigatorWidth/2);
+				
 		    	opts.navigator.find('a').removeClass('hover');
 		    	opts.navigator.find('a').eq(opts.index).addClass('hover');
 		},
@@ -212,8 +212,7 @@ date:2015-01-06
 				// 导航
 
 				$navigator.find('a').click(function(event) {
-					$navigator.find('a').removeClass('circle_hover');
-					$(this).addClass('circle_hover');
+					
 					var index=$navigator.find('a').index(this);
 					
 					return privateclass.showIndex(index);
